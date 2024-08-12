@@ -1,0 +1,28 @@
+.header,
+.nav,
+main {
+    width: 100%;
+}
+
+.header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    background: var(--BG_DARK_X);
+    height: var(--HEADER_HEIGHT);
+}
+
+.header .nav {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem;
+}
+
+.main {
+    flex-grow: 1;
+    background: var(--BG_LIGHT);
+    padding: 1rem;
+    margin-top: var(--HEADER_HEIGHT);
+}
