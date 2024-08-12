@@ -9,3 +9,21 @@
 .xlarge {
     transform: scale(3);
 }
+
+.icon-light {
+    display: none;
+}
+
+.icon-dark {
+    display: block;
+}
+
+@media (prefers-color-scheme: dark) {
+    .icon-light {
+        display: block;
+    }
+
+    .icon-dark {
+        visibility: hidden;
+    }
+}

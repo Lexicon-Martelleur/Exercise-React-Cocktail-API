@@ -3,10 +3,9 @@ import { Link } from "react-router-dom";
 
 import { path } from "../../constants";
 import { Icon } from "../../components";
-import { icons } from "../../assets"
+import { icons } from "../../assets";
 
 import styles from "./BaseLayout.module.css";
-
 
 interface Props {
     children?: ReactNode;

@@ -3,6 +3,7 @@ import { ReactElement } from "react";
 
 import { IIcon } from "./types";
 import { IconSizeType } from "./types";
+
 import styles from "./Icon.module.css";
 
 interface Props {
@@ -16,15 +17,44 @@ export const Icon: React.FC<Props> = ({
   size,
   className
 }): ReactElement => (() => {
-  const inClasses = className ?? ""
+  const derivedDarkModeClasses = [
+    styles.iconLight,
+    className ?? ""
+  ].join(" ");
+
+  const derivedLightModeClasses = [
+    styles.iconDark,
+    className ?? ""
+  ].join(" ");
+
   switch (size) {
     case "medium":
-      return <img className={`${styles.medium} ${inClasses}`} {...icon} />
+      return (
+        <>
+          <img className={`${styles.medium} ${derivedDarkModeClasses}`} {...icon.light} />
+          <img className={`${styles.medium} ${derivedLightModeClasses}`} {...icon.dark} />
+        </>
+      )
     case "large":
-      return <img className={`${styles.large} ${inClasses}`} {...icon} />
+      return (
+        <>
+          <img className={`${styles.large} ${derivedDarkModeClasses}`} {...icon.light} />
+          <img className={`${styles.large} ${derivedLightModeClasses}`} {...icon.dark} />
+        </>
+      )
     case "xlarge":
-      return <img className={`${styles.xlarge} ${inClasses}`} {...icon} />
+      return (
+        <>
+          <img className={`${styles.xlarge} ${derivedDarkModeClasses}`} {...icon.light} />
+          <img className={`${styles.xlarge} ${derivedLightModeClasses}`} {...icon.dark} />
+        </>
+      )
     case "small":
     default:
-      return <img className={`${inClasses}`} {...icon} />
+      return (
+        <>
+          <img className={derivedDarkModeClasses} {...icon.light} />
+          <img className={derivedLightModeClasses} {...icon.dark} />
+        </>
+      )
   }})();

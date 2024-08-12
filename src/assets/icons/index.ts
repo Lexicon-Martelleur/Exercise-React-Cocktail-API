@@ -1,15 +1,31 @@
-import search from "./search.svg";
-import home from "./home.svg";
+import searchLight from "./search-light.svg";
+import homeLight from "./home-light.svg";
+import searchDark from "./search-dark.svg";
+import homeDark from "./home-dark.svg";
 
 export const icons = {
-    search: {
-        src: search,
-        alt: "Search",
-        title: "Search"
+    search: { 
+        dark: {
+            src: searchDark,
+            alt: "Search",
+            title: "Search"
+        },
+        light: {
+            src: searchLight,
+            alt: "Search",
+            title: "Search"
+        },
     },
     home: {
-        src: home,
-        alt: "Home",
-        title: "Home"
+        dark: {
+            src: homeDark,
+            alt: "Home",
+            title: "Home"
+        },
+        light: {
+            src: homeLight,
+            alt: "Home",
+            title: "Home"
+        }
     }
-};
+} as const;

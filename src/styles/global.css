@@ -1,31 +1,29 @@
 :root {
-    --BG_DARK_X: #000F1F;
-    --BG_DARK: #001F3D;
-    --BG_MEDIUM: #005F8F;
-    --BG_LIGHT: #265973; 
-    --BG_LIGHT_X: #CCFFFF; 
+    --BG_DARK_X: #6482AD;
+    --BG_DARK: #7FA1C3;
+    --BG_MEDIUM: #E2DAD6;
+    --BG_LIGHT: #F5EDED;
+
     --BUTTON_COLOR_OK: #003c5a;
-    --BORDER_COLOR_LIGHT: #CCFFFF;
-    --BORDER_COLOR_MEDIUM: #003c5a;
-    --BORDER_COLOR_DARK: #000;
 
     --FONT_PRIMARY: "Courier Prime", monospace;
     --FONT_COLOR_LIGHT: #CCFFFF;
     --FONT_COLOR_MEDIUM: #0079b6;
     --FONT_COLOR_DARK: #000F1F;
     
-    --BORDER_MEDIUM: 1px solid var(--BORDER_COLOR_MEDIUM);
-    --BORDER_LIGHT: 1px solid var(--BORDER_COLOR_LIGHT);
-    --BORDER_LIGHT_FAT: 3px solid var(--BORDER_COLOR_LIGHT);
-    --BORDER_MEDIUM_FAT: 3px solid var(--BORDER_COLOR_MEDIUM);
-    --BORDER_DARK_FAT: 3px solid var(--BORDER_COLOR_DARK);
+    --BORDER_LIGHT: 1px solid var(--BG_LIGHT);
+    --BORDER_MEDIUM: 1px solid var(--BG_MEDIUM);
+    --BORDER_DARK: 1px solid var(--BG_DARK);
+    --BORDER_LIGHT_FAT: 3px solid var(--BG_LIGHT);
+    --BORDER_MEDIUM_FAT: 3px solid var(--BG_MEDIUM);
+    --BORDER_DARK_FAT: 3px solid var(--BG_DARK);
 
     --HEADER_HEIGHT: 60px;
 }
 
 * {
     font-family: var(--FONT_PRIMARY);
-    color: var(--FONT_COLOR_LIGHT);
+    color: var(--FONT_COLOR_DARK);
     box-sizing: border-box;
     padding: 0;
     margin: 0;
@@ -39,4 +37,17 @@
     align-items: center;
     min-height: 100vh;
     background-color: var(--BG_DARK);
+}
+
+@media (prefers-color-scheme: dark) {
+    :root {
+        --BG_DARK_X: #03001C;
+        --BG_DARK: #301E67;
+        --BG_MEDIUM: #5B8FB9;
+        --BG_LIGHT: #5B8FB9;
+    }
+
+    * {
+        color: var(--FONT_COLOR_LIGHT);
+    }
 }
