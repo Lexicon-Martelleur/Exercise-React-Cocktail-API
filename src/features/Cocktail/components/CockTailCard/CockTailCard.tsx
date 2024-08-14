@@ -20,8 +20,6 @@ export const CocktailCard: React.FC<Props> = ({
             <div className={styles.imageContainer}>
             <Image image={{ src: drink.thumbNail, alt: `Image of ${drink.name}` }}/>
             </div>
-            <p>{drink.alcoholic}</p>
-            <p>{drink.category}</p>
             {children}
         </article>
     );

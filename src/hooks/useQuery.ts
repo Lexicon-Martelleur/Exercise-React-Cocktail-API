@@ -2,7 +2,9 @@ import { useCallback, useEffect, useState } from "react";
 
 export type UseQueryReturnType = ReturnType<typeof useQuery>;
 
-export const useQuery = <Data extends {}>(query: () => Promise<Data>) => {
+export const useQuery = <Data extends {}>(
+    query: () => Promise<Data>
+) => {
     const [ pending, setPending ] = useState<boolean>(true);
     const [ error, setError ] = useState<boolean>(false);
     const [ data, setData ] = useState<Data | null>(null);
@@ -18,7 +20,7 @@ export const useQuery = <Data extends {}>(query: () => Promise<Data>) => {
             setError(true);
         }
         setPending(false);
-    }, [])
+    }, [query])
     
     useEffect(() => {
         fetchData();

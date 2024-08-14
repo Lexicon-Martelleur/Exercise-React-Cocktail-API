@@ -1,10 +1,11 @@
-import React from "react"
 import { ReactElement } from "react"
+
+import { CocktailDetails } from "../../features";
 
 export const InfoPage = (): ReactElement => {
     return (
         <>
-            <h1>InfoPage</h1>
+            <CocktailDetails />
         </>
     );
 }

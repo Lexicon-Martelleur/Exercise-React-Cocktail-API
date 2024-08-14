@@ -1,6 +1,6 @@
 export const path = {
     INDEX: "/",
-    SEARCH: "SEARCH",
-    INFO: "INFO",
+    SEARCH: "search",
+    INFO: "info",
     UNKNOWN: "*"
 } as const

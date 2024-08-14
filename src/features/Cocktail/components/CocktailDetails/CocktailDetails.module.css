@@ -1,0 +1,26 @@
+.cocktail-section {
+    position: fixed;
+    top: var(--HEADER_HEIGHT);
+    left: 0;
+    height: calc(100vh - var(--HEADER_HEIGHT));
+    width: 100vw;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    overflow: hidden;
+}
+
+.transparent-ctr {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    width: 100%;
+    height: 100%;
+    padding: 1rem;
+    background-color: rgb(255, 255, 255, 0.6);
+    overflow-y: auto;
+}
+
+.drink-detail-text {
+    color: var(--FONT_COLOR_DARK);
+}

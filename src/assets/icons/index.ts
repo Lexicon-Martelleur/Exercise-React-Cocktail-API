@@ -4,6 +4,8 @@ import searchDark from "./search-dark.svg";
 import homeDark from "./home-dark.svg";
 import refreshDark from "./refresh-dark.svg";
 import refreshLight from "./refresh-light.svg";
+import ingredientsDark from "./ingredients-dark.svg";
+import ingredientsLight from "./ingredients-light.svg";
 
 
 export const icons = {
@@ -41,6 +43,18 @@ export const icons = {
             src: refreshLight,
             alt: "Home",
             title: "Home"
+        }
+    },
+    ingredients: {
+        dark: {
+            src: ingredientsDark,
+            alt: "Drink ingredients",
+            title: "Drink ingredients"
+        },
+        light: {
+            src: ingredientsLight,
+            alt: "Drink ingredients",
+            title: "Drink ingredients"
         }
     }
 } as const;
