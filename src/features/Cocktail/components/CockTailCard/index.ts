@@ -1,1 +1,1 @@
-export { CocktailCard } from "./CockTailCard";
+export { CocktailCard } from "./CocktailCard";

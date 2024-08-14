@@ -27,7 +27,6 @@ main {
     align-items: center;
     flex-grow: 1;
     background: var(--BG_MEDIUM);
-    padding: 1rem;
     margin-top: var(--HEADER_HEIGHT);
     max-width: 1000px;
 }

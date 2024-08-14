@@ -1,15 +1,35 @@
 .cocktail-card-article {
+    flex-grow: 1;
     display: flex;
     flex-direction: column;
     justify-content: center;
-    gap: 1rem;
+    gap: 0.5rem;
     align-items: center;
     padding: 3rem;
-    border-radius: 1rem;
     background-color: var(--BG_LIGHT);
-    box-shadow: var(--SHADOW_LIGHT);
 }
 
 .image-container {
-    width: 50%;
+    width: 70%;
+}
+
+.image {
+    aspect-ratio: 1.4/1;
+}
+
+@media (min-width: 500px) and (min-height: 600px) {
+    .cocktail-card-article {
+        margin: 3rem;
+        padding: 3rem;
+        border-radius: 1rem;
+        box-shadow: var(--SHADOW_LIGHT);
+    }
+
+    .image-container {
+        width: 50%;
+    }
+
+    .image {
+        aspect-ratio: 1/1;
+    }
 }

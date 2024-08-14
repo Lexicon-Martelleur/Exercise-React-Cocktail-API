@@ -3,7 +3,7 @@ import { ReactElement, ReactNode } from "react";
 import { IDrinkData } from "../../../../data";
 import { Image } from "../../../../components";
 
-import styles from "./CockTailCard.module.css";
+import styles from "./CocktailCard.module.css";
 
 interface Props {
     drink: IDrinkData
@@ -18,7 +18,10 @@ export const CocktailCard: React.FC<Props> = ({
         <article className={styles.cocktailCardArticle}>
             <h3>{drink.name}</h3>
             <div className={styles.imageContainer}>
-            <Image image={{ src: drink.thumbNail, alt: `Image of ${drink.name}` }}/>
+            <Image
+                className={styles.image}
+                image={{ src: drink.thumbNail, alt: `Image of ${drink.name}` }}
+            />
             </div>
             {children}
         </article>

@@ -1,7 +1,7 @@
 import { ReactElement } from "react";
 
 import { cocktailAPI } from "../../../../data";
-import { CocktailCard } from "../CockTailCard";
+import { CocktailCard } from "../CocktailCard";
 import { useQuery } from "../../../../hooks";
 import { icons } from "../../../../assets";
 import { Icon } from "../../../../components";
@@ -10,7 +10,7 @@ import { uppdateCurrentCocktailAction } from "../../state";
 import { useNavigate } from "react-router-dom";
 import { path } from "../../../../constants";
 
-import styles from "./RandomCocktail.module.css"
+import styles from "./RandomCocktail.module.css";
 
 
 export const RandomCocktail = (): ReactElement => {
@@ -36,14 +36,14 @@ export const RandomCocktail = (): ReactElement => {
         <>{(randomDrinkQuery.data != null && !randomDrinkQuery.error)
             ? <CocktailCard drink={randomDrinkQuery.data}>
                 <div className={styles.menuCtr}>
-                <button className={styles.menuBtn}
-                    onClick={_ => { handleSelectIngredients() }}>
-                    <Icon icon={icons.ingredients}/> 
-                </button>
-                <button className={styles.menuBtn}
-                    onClick={_ => { handleNewRandomDrink() }}>
-                    <Icon icon={icons.refresh}/> 
-                </button>
+                    <button className={styles.menuBtn}
+                        onClick={_ => { handleSelectIngredients() }}>
+                        <Icon icon={icons.ingredients}/> 
+                    </button>
+                    <button className={styles.menuBtn}
+                        onClick={_ => { handleNewRandomDrink() }}>
+                        <Icon icon={icons.refresh}/> 
+                    </button>
                 </div>
             </CocktailCard>
             : <p>error</p>

@@ -1,4 +1,4 @@
-.cocktail-section {
+.background-ctr {
     position: fixed;
     top: var(--HEADER_HEIGHT);
     left: 0;
@@ -10,7 +10,7 @@
     overflow: hidden;
 }
 
-.transparent-ctr {
+.cocktail-detail-section {
     display: flex;
     flex-direction: column;
     gap: 1rem;
