@@ -24,6 +24,6 @@
     }
 
     .icon-dark {
-        visibility: hidden;
+        display: none;
     }
 }

@@ -1,5 +1,5 @@
 :root {
-    --BG_DARK_X: #6482AD;
+    --BG_DARK_X: #578dc4;
     --BG_DARK: #7FA1C3;
     --BG_MEDIUM: #E2DAD6;
     --BG_LIGHT: #F5EDED;
@@ -8,7 +8,6 @@
 
     --FONT_PRIMARY: "Courier Prime", monospace;
     --FONT_COLOR_LIGHT: #CCFFFF;
-    --FONT_COLOR_MEDIUM: #0079b6;
     --FONT_COLOR_DARK: #000F1F;
     
     --BORDER_LIGHT: 1px solid var(--BG_LIGHT);
@@ -19,6 +18,8 @@
     --BORDER_DARK_FAT: 3px solid var(--BG_DARK);
 
     --HEADER_HEIGHT: 60px;
+
+    --SHADOW_LIGHT: rgba(0, 0, 0, 0.35) 0px 0px 15px;
 }
 
 * {
@@ -36,15 +37,17 @@
     justify-content: start;
     align-items: center;
     min-height: 100vh;
-    background-color: var(--BG_DARK);
+    background-color: var(--BG_MEDIUM);
 }
 
 @media (prefers-color-scheme: dark) {
     :root {
         --BG_DARK_X: #03001C;
-        --BG_DARK: #301E67;
-        --BG_MEDIUM: #5B8FB9;
+        --BG_DARK: #1b113b;
+        --BG_MEDIUM: #301e67;
         --BG_LIGHT: #5B8FB9;
+
+        --SHADOW_LIGHT: rgb(255, 255, 255) 0px 0px 15px;;
     }
 
     * {

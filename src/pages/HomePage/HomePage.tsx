@@ -1,10 +1,11 @@
-import React from "react"
-import { ReactElement } from "react"
+import { ReactElement } from "react";
+
+import { RandomCocktail } from "../../features";
 
 export const HomePage = (): ReactElement => {
     return (
         <>
-            <h1>HomePage</h1>
+            <RandomCocktail />
         </>
     );
 }

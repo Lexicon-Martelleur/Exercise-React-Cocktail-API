@@ -1,0 +1,15 @@
+.cocktail-card-article {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 1rem;
+    align-items: center;
+    padding: 3rem;
+    border-radius: 1rem;
+    background-color: var(--BG_LIGHT);
+    box-shadow: var(--SHADOW_LIGHT);
+}
+
+.image-container {
+    width: 80%;
+}
