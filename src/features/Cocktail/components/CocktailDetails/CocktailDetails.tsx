@@ -1,5 +1,5 @@
 import { ReactElement } from "react";
-import { v4 as uuidv } from 'uuid';
+import { v4 as uuid } from 'uuid';
 
 import { useCocktailContext } from "../../context";
 
@@ -34,7 +34,7 @@ export const CocktailDetails = (): ReactElement => {
                     Ingredients:
                 </h3>
                 {cocktailState.currentDrink.ingredients.map(item => (
-                    <p key={uuidv()}
+                    <p key={uuid()}
                         className={styles.drinkDetailText}>
                         {item.measurement} {item.ingredient}
                     </p>

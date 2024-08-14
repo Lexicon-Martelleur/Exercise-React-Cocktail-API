@@ -1,10 +1,10 @@
-import React from "react"
 import { ReactElement } from "react"
+import { CocktailSearch } from "../../features";
 
 export const SearchPage = (): ReactElement => {
     return (
         <>
-            <h1>SearchPage</h1>
+            <CocktailSearch />
         </>
     );
 }

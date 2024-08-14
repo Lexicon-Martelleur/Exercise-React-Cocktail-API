@@ -26,6 +26,28 @@ export class CocktailAPI {
             throw new APIError();
         }
     }
+
+    getCocktailByName = async (searchQuery: string): Promise<IDrinkData[]> => {
+        try {
+            const res = await fetch(`${this.API}/search.php?s=${searchQuery}`);
+            const result = await res.json();
+            
+            const drinkItems = result.drinks.map((item: any) => ({
+                id: item.idDrink,
+                name: item.strDrink,
+                thumbNail: item.strDrinkThumb,
+                category: item.strCategory,
+                alcoholic: item.strAlcoholic,
+                ingredients: extractIngredienstWithMeasurements(item),
+                tags: item.strTags,
+                glass: item.strGlass
+            }))
+            if (drinkItems.every(isRandomDrinkData)) { return drinkItems; }
+            else { throw new APIError(); }
+        } catch (err) {
+            throw new APIError();
+        }
+    }
 }
 
 export const cocktailAPI = new CocktailAPI();

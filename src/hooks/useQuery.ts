@@ -3,13 +3,14 @@ import { useCallback, useEffect, useState } from "react";
 export type UseQueryReturnType = ReturnType<typeof useQuery>;
 
 export const useQuery = <Data extends {}>(
-    query: () => Promise<Data>
+    query: () => Promise<Data>,
+    queryOnMount: boolean
 ) => {
     const [ pending, setPending ] = useState<boolean>(true);
     const [ error, setError ] = useState<boolean>(false);
     const [ data, setData ] = useState<Data | null>(null);
     
-    const fetchData = useCallback(async () => {
+    const queryData = useCallback(async () => {
         setPending(true);
         try {
             const data = await query();
@@ -23,13 +24,15 @@ export const useQuery = <Data extends {}>(
     }, [query])
     
     useEffect(() => {
-        fetchData();
-    }, [fetchData]);
+        if (queryOnMount) {
+            queryData();
+        }
+    }, [queryData]);
 
     return {
         data,
         error,
         pending,
-        update: fetchData
+        queryData
     };
 }
