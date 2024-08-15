@@ -17,6 +17,7 @@
     --BORDER_LIGHT_FAT: 3px solid var(--BG_LIGHT);
     --BORDER_MEDIUM_FAT: 3px solid var(--BG_MEDIUM);
     --BORDER_DARK_FAT: 3px solid var(--BG_DARK);
+    --BORDER_DARK_X_FAT: 3px solid var(--BG_DARK_X);
 
     --HEADER_HEIGHT: 60px;
 

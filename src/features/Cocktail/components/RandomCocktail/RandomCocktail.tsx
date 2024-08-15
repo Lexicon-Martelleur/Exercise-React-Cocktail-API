@@ -5,7 +5,7 @@ import { cocktailAPI } from "../../../../data";
 import { CocktailCard } from "../CocktailCard";
 import { useQuery } from "../../../../hooks";
 import { icons } from "../../../../assets";
-import { Icon } from "../../../../components";
+import { Icon, SelectButton } from "../../../../components";
 import { useCocktailContext } from "../../context";
 import { uppdateCurrentCocktailAction } from "../../state";
 import { path } from "../../../../constants";
@@ -15,7 +15,7 @@ import styles from "./RandomCocktail.module.css";
 export const RandomCocktail = (): ReactElement => {
     const [dispatchCoctailAction] = useCocktailContext();
     const randomDrinkQuery = useQuery(cocktailAPI.getRandomCocktail, true);
-    const navigate = useNavigate()
+    const navigate = useNavigate();
 
     const handleNewRandomDrink = () =>  {
         randomDrinkQuery.queryData()
@@ -24,7 +24,7 @@ export const RandomCocktail = (): ReactElement => {
     const handleSelectDrinkIngredients = () =>  {
         if (randomDrinkQuery.data == null) { return; }
         dispatchCoctailAction(uppdateCurrentCocktailAction(randomDrinkQuery.data));
-        navigate(`/${path.INFO}`);
+        navigate(`/${path.INFO}?id=${randomDrinkQuery.data.id}`);
     }
 
     if (randomDrinkQuery.pending) {
@@ -36,17 +36,18 @@ export const RandomCocktail = (): ReactElement => {
     }
     
     return (
-        <article>{(randomDrinkQuery.data != null && !randomDrinkQuery.error)
+        <article className={styles.randomCocktailArticle}>
+            {(randomDrinkQuery.data != null && !randomDrinkQuery.error)
             ? <CocktailCard drink={randomDrinkQuery.data}>
                 <div className={styles.menuCtr}>
-                    <button className={styles.menuBtn}
-                        onClick={_ => { handleSelectDrinkIngredients() }}>
+                    <SelectButton
+                        onSelect={handleSelectDrinkIngredients}>
                         <Icon icon={icons.ingredients}/> 
-                    </button>
-                    <button className={styles.menuBtn}
-                        onClick={_ => { handleNewRandomDrink() }}>
+                    </SelectButton>
+                    <SelectButton
+                        onSelect={handleNewRandomDrink}>
                         <Icon icon={icons.refresh}/> 
-                    </button>
+                    </SelectButton>
                 </div>
             </CocktailCard>
             : <p>error</p>

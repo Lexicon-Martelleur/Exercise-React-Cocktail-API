@@ -48,6 +48,29 @@ export class CocktailAPI {
             throw new APIError();
         }
     }
+
+    getCocktailListTypes = async (listType: "c" | "g" | "i"):
+    Promise<string[]> => {
+        try {
+            const res = await fetch(`${this.API}/list.php?${listType}=list`);
+            const result = await res.json();
+            
+            const listTypes = result.drinks.map((item: any) => {
+                switch (listType) {
+                    case "c": return item.strCategory;
+                    case "g": return item.strGlass;
+                    case "i": return item.strIngredient1;
+                    default: [];
+                }
+            });
+            if (listTypes.every((item: any) => typeof item === "string")) {
+                return listTypes;
+            }
+            else { throw new APIError(); }
+        } catch (err) {
+            throw new APIError();
+        }
+    }
 }
 
 export const cocktailAPI = new CocktailAPI();

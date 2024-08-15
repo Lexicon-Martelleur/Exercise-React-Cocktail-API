@@ -2,6 +2,9 @@ import { useCallback, useEffect, useState } from "react";
 
 export type UseQueryReturnType = ReturnType<typeof useQuery>;
 
+/**
+ * @TODO Buggy when queru on rendering
+ */
 export const useQuery = <Data extends {}>(
     query: () => Promise<Data>,
     queryOnMount: boolean
@@ -27,7 +30,7 @@ export const useQuery = <Data extends {}>(
         if (queryOnMount) {
             queryData();
         }
-    }, [queryData]);
+    }, [queryData, queryOnMount]);
 
     return {
         data,
