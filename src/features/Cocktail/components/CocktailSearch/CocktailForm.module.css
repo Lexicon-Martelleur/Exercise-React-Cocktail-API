@@ -1,0 +1,41 @@
+.form {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    gap: 0.5rem;
+}
+
+.search-ctr {
+    position: relative;
+    top: 0;
+    left: 0;
+    width: 100%;
+    gap: 1rem;
+    border: var(--BORDER_DARK_FAT);
+    border-radius: 1rem;
+    padding: 0.5rem 1rem;
+    background-color: var(--BG_LIGHT);
+}
+
+.search-field {
+    background-color: var(--BG_LIGHT);
+    border: none;
+    outline: none;
+    padding: 1rem;
+    font-size: 1.1rem;
+    overflow: hidden;
+}
+
+.search-field::placeholder {
+    color: var(--FONT_COLOR);
+}
+
+.submit-btn {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    right: 2rem;
+    background-color: var(--BG_LIGHT);
+    border: none;
+    cursor: pointer;
+}

@@ -2,11 +2,11 @@ export interface IDrinkData {
     id: string;
     name: string;
     thumbNail: string;
-    category: string;
-    alcoholic: string;
     ingredients: IDrinkIngredient[];
-    tags: string | null;
-    glass: string;
+    category?: string;
+    alcoholic?: string;
+    tags?: string | null;
+    glass?: string;
 }
 
 export function isRandomDrinkData (obj: unknown): obj is IDrinkData {
@@ -20,11 +20,11 @@ export function isRandomDrinkData (obj: unknown): obj is IDrinkData {
         typeof castedObj.id === "string" &&
         typeof castedObj.name === "string" &&
         typeof castedObj.thumbNail === "string" &&
-        typeof castedObj.category === "string" &&
-        typeof castedObj.alcoholic === "string" &&
+        (typeof castedObj.category === "string" || castedObj.category == null) &&
+        (typeof castedObj.alcoholic === "string" || castedObj.alcoholic == null) &&
         castedObj.ingredients.every(isDrinkIngredient) &&
         (typeof castedObj.tags === "string" || castedObj.tags == null) &&
-        typeof castedObj.glass === "string"
+        (typeof castedObj.glass === "string" || castedObj.glass == null)
     );
 }
 
@@ -46,3 +46,9 @@ export function isDrinkIngredient (obj: unknown): obj is IDrinkData {
     );
 }
 
+export type CocktailGroupType = "c" | "g" | "i";
+
+export interface CocktailGroupTypeWithValue {
+    group: CocktailGroupType;
+    value: string;
+}

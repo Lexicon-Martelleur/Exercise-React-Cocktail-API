@@ -50,8 +50,6 @@
         --BG_LIGHT: #5B8FB9;
 
         --FONT_COLOR: var(--FONT_COLOR_LIGHT);
-
-        --SHADOW_LIGHT: rgb(255, 255, 255) 0px 0px 15px;;
     }
 
     * {

@@ -25,7 +25,7 @@ export const CocktailDetails = (): ReactElement => {
                     # {drink.tags}
                 </p>}
                 <p className={styles.drinkDetailText}>
-                    Category: {drink.glass}
+                    Category: {drink.category}
                 </p>
                 <p className={styles.drinkDetailText}>
                     Recommended glass: {drink.glass}

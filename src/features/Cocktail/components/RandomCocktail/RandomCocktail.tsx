@@ -1,4 +1,4 @@
-import { ReactElement } from "react";
+import { ReactElement, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
 import { cocktailAPI } from "../../../../data";
@@ -14,8 +14,12 @@ import styles from "./RandomCocktail.module.css";
 
 export const RandomCocktail = (): ReactElement => {
     const [dispatchCoctailAction] = useCocktailContext();
-    const randomDrinkQuery = useQuery(cocktailAPI.getRandomCocktail, true);
+    const randomDrinkQuery = useQuery(cocktailAPI.getRandomCocktail);
     const navigate = useNavigate();
+
+    useEffect(() => {
+        randomDrinkQuery.queryData();
+    }, []);
 
     const handleNewRandomDrink = () =>  {
         randomDrinkQuery.queryData()

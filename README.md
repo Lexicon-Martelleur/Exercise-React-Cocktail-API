@@ -76,7 +76,7 @@ The web application will have atleast three different pages.
 ### Search Page++
 
 - The user should be able to to advanced searches.
-- The use should be able to search on one of thes parameters or a combination of them:
+- The use should be able to search on one of these parameters or a combination of them:
 
   - Category
   - Ingredient

@@ -1,13 +1,10 @@
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useState } from "react";
 
 export type UseQueryReturnType = ReturnType<typeof useQuery>;
 
-/**
- * @TODO Buggy when queru on rendering
- */
-export const useQuery = <Data extends {}>(
-    query: () => Promise<Data>,
-    queryOnMount: boolean
+export const useQuery = <Data extends {}, Args extends (unknown[])>(
+    query: (...args: Args) => Promise<Data>,
+    args: Args = [] as unknown as Args
 ) => {
     const [ pending, setPending ] = useState<boolean>(true);
     const [ error, setError ] = useState<boolean>(false);
@@ -16,7 +13,7 @@ export const useQuery = <Data extends {}>(
     const queryData = useCallback(async () => {
         setPending(true);
         try {
-            const data = await query();
+            const data = await query(...args)
             setData(data);
             setError(false);
         } catch (err) {
@@ -24,13 +21,7 @@ export const useQuery = <Data extends {}>(
             setError(true);
         }
         setPending(false);
-    }, [query])
-    
-    useEffect(() => {
-        if (queryOnMount) {
-            queryData();
-        }
-    }, [queryData, queryOnMount]);
+    }, [query, args])
 
     return {
         data,

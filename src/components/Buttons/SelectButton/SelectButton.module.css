@@ -10,3 +10,9 @@
 .select-btn:hover {
     background-color: var(--BG_DARK);
 }
+
+.select-btn:disabled {
+    background-color: var(--BG_MEDIUM);
+    color: rgb(0, 0, 0, 0.5);
+    cursor: not-allowed;
+}
