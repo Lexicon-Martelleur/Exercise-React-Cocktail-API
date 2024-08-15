@@ -1,0 +1,31 @@
+.page-navigation-article {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 1rem;
+}
+
+.page-navigation-article > button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 2rem;
+    padding: 1rem;
+    width: 4rem;
+    height: 4rem;
+    border: none;
+    border-radius: 50%;
+    background-color: var(--BG_MEDIUM);
+    cursor: pointer;
+    transition: all 0.3s; 
+}
+
+.page-navigation-article > button:hover {
+    background-color: var(--BG_DARK);
+}
+
+.page-navigation-article > button:disabled {
+    background-color: var(--BG_MEDIUM);
+    color: rgb(0, 0, 0, 0.3);
+    cursor: not-allowed;
+}

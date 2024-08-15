@@ -16,10 +16,6 @@ export const RandomCocktail = (): ReactElement => {
     const [dispatchCoctailAction] = useCocktailContext();
     const randomDrinkQuery = useQuery(cocktailAPI.getRandomCocktail, true);
     const navigate = useNavigate()
-    
-    if (randomDrinkQuery.pending) {
-        return <div className={styles.loader}></div>
-    }
 
     const handleNewRandomDrink = () =>  {
         randomDrinkQuery.queryData()
@@ -30,9 +26,17 @@ export const RandomCocktail = (): ReactElement => {
         dispatchCoctailAction(uppdateCurrentCocktailAction(randomDrinkQuery.data));
         navigate(`/${path.INFO}`);
     }
+
+    if (randomDrinkQuery.pending) {
+        return (
+            <div className={styles.loaderCtr}>
+                <div className={styles.loader}></div>
+            </div>
+        )
+    }
     
     return (
-        <>{(randomDrinkQuery.data != null && !randomDrinkQuery.error)
+        <article>{(randomDrinkQuery.data != null && !randomDrinkQuery.error)
             ? <CocktailCard drink={randomDrinkQuery.data}>
                 <div className={styles.menuCtr}>
                     <button className={styles.menuBtn}
@@ -47,6 +51,6 @@ export const RandomCocktail = (): ReactElement => {
             </CocktailCard>
             : <p>error</p>
         }
-        </>
+        </article>
     )
 }

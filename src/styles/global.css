@@ -9,6 +9,7 @@
     --FONT_PRIMARY: "Courier Prime", monospace;
     --FONT_COLOR_LIGHT: #CCFFFF;
     --FONT_COLOR_DARK: #000F1F;
+    --FONT_COLOR: var(--FONT_COLOR_DARK);
     
     --BORDER_LIGHT: 1px solid var(--BG_LIGHT);
     --BORDER_MEDIUM: 1px solid var(--BG_MEDIUM);
@@ -46,6 +47,8 @@
         --BG_DARK: #1b113b;
         --BG_MEDIUM: #301e67;
         --BG_LIGHT: #5B8FB9;
+
+        --FONT_COLOR: var(--FONT_COLOR_LIGHT);
 
         --SHADOW_LIGHT: rgb(255, 255, 255) 0px 0px 15px;;
     }

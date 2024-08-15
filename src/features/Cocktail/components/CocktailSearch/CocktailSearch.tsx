@@ -1,6 +1,5 @@
-import { ReactElement, useEffect, useState } from "react";
+import { ReactElement, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { v4 as uuid } from 'uuid';
 
 import { icons } from "../../../../assets";
 import { Icon } from "../../../../components";
@@ -8,9 +7,10 @@ import { cocktailAPI as api } from "../../../../data";
 import { useQuery } from "../../../../hooks";
 import { path } from "../../../../constants";
 import { useCocktailContext } from "../../context";
+import { uppdateCurrentCocktailAction } from "../../state";
+import { SearchResult } from "./SearchResult";
 
 import styles from "./CocktailSearch.module.css";
-import { uppdateCurrentCocktailAction } from "../../state";
 
 /**
  * @TODO Cleanup
@@ -18,12 +18,9 @@ import { uppdateCurrentCocktailAction } from "../../state";
 export const CocktailSearch = (): ReactElement => {
     const navigate = useNavigate();
     const [dispatchCoctailAction] = useCocktailContext();
-    const [searchWord, setSearchword] = useState("");
-    const getCocktailByName = async () => await api.getCocktailByName(searchWord);
+    const [searchString, setSearchString] = useState("");
+    const getCocktailByName = async () => await api.getCocktailByName(searchString);
     const searchDrinkQuery = useQuery(getCocktailByName, false);
-    const pageSize = 10;
-    const [pageNr, setPageNr] = useState(0);
-    const [pages, setPages] = useState(0);
  
     const handleSubmit:
     React.FormEventHandler<HTMLFormElement> = (event) => {
@@ -43,23 +40,6 @@ export const CocktailSearch = (): ReactElement => {
         ));
         navigate(`/${path.INFO}`);
     }
-
-    useEffect(() => {
-        if (searchDrinkQuery.data == null) { return; }
-        const pages = Math.ceil(searchDrinkQuery.data.length / 10);
-        setPages(pages);
-        console.log(pages);
-
-    }, [searchDrinkQuery.data])
-
-    useEffect(() => {
-        console.log(pageNr);
-
-    }, [pageNr])
-
-    const updatePageNr = (offset: number) => {
-        setPageNr(prevValue => prevValue + offset)
-    }
     
     return (
         <section className={styles.searchSection}>
@@ -73,7 +53,7 @@ export const CocktailSearch = (): ReactElement => {
                         placeholder="E.g., margarita..."
                         minLength={2}
                         type="text"
-                        onChange={event => { setSearchword(event.target.value) }}/>         
+                        onChange={event => { setSearchString(event.target.value) }}/>         
                     <button
                         className={styles.submitBtn} 
                         type="submit">
@@ -81,30 +61,12 @@ export const CocktailSearch = (): ReactElement => {
                     </button>
                 </div>
             </form>
-            <div className={styles.searchResult}>
-            {searchDrinkQuery.data?.slice(pageNr * pageSize, (pageNr + 1) * pageSize)
-                .map((item, index) => (
-                <button key={uuid()}
-                    onClick={_ => { handleSelectDrink(index + (pageNr * pageSize)) }}>
-                    {index + (pageNr * pageSize) + 1}. {item.name}
-                </button>               
-            ))}
-            </div>
             {searchDrinkQuery.data != null &&
             searchDrinkQuery.data.length > 0 &&
-            <>  
-                <p>Page ({pageNr + 1}/{pages})</p>
-                <div className={styles.pageNavigation}>
-                    <button disabled={pageNr === 0} 
-                        onClick={_ => { updatePageNr(-1) }}>
-                        Prev
-                    </button>
-                    <button disabled={pageNr === (pages - 1)} 
-                        onClick={_ => { updatePageNr(1) }}>
-                        Next
-                    </button>
-                </div>
-            </>}
+            <SearchResult
+                cocktails={searchDrinkQuery.data}
+                onSelectDrink={handleSelectDrink}/>
+            }
         </section>
     )
 }

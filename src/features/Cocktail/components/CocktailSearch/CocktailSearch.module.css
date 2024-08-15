@@ -24,6 +24,10 @@
     font-size: 1.1rem;
 }
 
+.search-field::placeholder {
+    color: var(--FONT_COLOR);
+}
+
 .submit-btn {
     padding: 1rem;
     background-color: var(--BG_LIGHT);
@@ -35,45 +39,4 @@
 
 .submit-btn:hover {
     background-color: var(--BG_MEDIUM);
-}
-
-.search-result {
-    width: 100%;
-    padding: 1rem;
-}
-
-.search-result > button {
-    display: block;
-    width: 100%;
-    text-align: start;
-    padding-block: 1rem;
-    border: none;
-    background-color: var(--BG_MEDIUM);
-    border-bottom: var(--BORDER_DARK);
-    cursor: pointer;
-}
-
-.page-navigation {
-    display: flex;
-    flex-direction: row;
-    gap: 1rem;
-}
-
-.page-navigation > button {
-    border: var(--BORDER_DARK_FAT);
-    padding: 1rem 2rem;
-    border-radius: 1rem;
-    background-color: var(--BG_DARK);
-    cursor: pointer;
-    transition: all 0.3s;   
-}
-
-.page-navigation > button:hover {
-    background-color: var(--BG_MEDIUM);
-}
-
-.page-navigation > button:disabled {
-    background-color: var(--BG_MEDIUM);
-    color: grey;
-    cursor: not-allowed;
 }
