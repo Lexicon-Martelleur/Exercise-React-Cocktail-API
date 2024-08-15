@@ -21,6 +21,8 @@ interface Props {
  * - Simplify
  * - Seperate (mayby can use utility functions or custom hooks)
  * - Implement error and pending state
+ * - Cache result
+ * - Dynamic routing
  */
 export const AdvancedCocktailForm: React.FC<Props> = ({
     onSelectDrink
@@ -89,53 +91,51 @@ export const AdvancedCocktailForm: React.FC<Props> = ({
 
     return (
         <form className={styles.form} onSubmit={handleSubmit}>
-            <fieldset className={styles.searchFieldSet}>
-                <label htmlFor={searchFormFieldNames.CATEGORY}>Category</label>
-                <select className={styles.searchField}
-                    id={searchFormFieldNames.CATEGORY}
-                    name={searchFormFieldNames.CATEGORY}
-                    value={category}
-                    onChange={event => { handleChange(setCategory, event) }}>
-                    {getOptions(categoryGroupQuery.data).map(value => (
-                    <option 
-                        key={uuid()}
-                        value={value.toLowerCase()}>
-                        {value}
-                    </option>
-                    ))}
-                </select>
-                <label htmlFor={searchFormFieldNames.CATEGORY}>Ingredient</label>
-                <select className={styles.searchField}
-                    id={searchFormFieldNames.INGREDIENT}
-                    name={searchFormFieldNames.INGREDIENT}
-                    value={ingredient}
-                    onChange={event => { handleChange(setIngredient, event) }}>
-                    {getOptions(ingredientGroupQuery.data).map(value => (
-                    <option 
-                        key={uuid()}
-                        value={value.toLowerCase()}>
-                        {value}
-                    </option>
-                    ))}
-                </select>
-                <label htmlFor={searchFormFieldNames.CATEGORY}>Glass type</label> 
-                <select className={styles.searchField}
-                    id={searchFormFieldNames.GLASS_TYPE}
-                    name={searchFormFieldNames.GLASS_TYPE}
-                    value={glassType}
-                    onChange={event => { handleChange(setGlassType, event) }}>
-                    {getOptions(glassGroupQuery.data).map(value => (
-                    <option 
-                        key={uuid()}
-                        value={value.toLowerCase()}>
-                        {value}
-                    </option>
-                    ))}
-                </select>
-                <SelectButton disabled={!isSubmitableForm} type="submit">
-                    Search
-                </SelectButton>
-            </fieldset>
+            <label htmlFor={searchFormFieldNames.CATEGORY}>Category</label>
+            <select className={styles.searchField}
+                id={searchFormFieldNames.CATEGORY}
+                name={searchFormFieldNames.CATEGORY}
+                value={category}
+                onChange={event => { handleChange(setCategory, event) }}>
+                {getOptions(categoryGroupQuery.data).map(value => (
+                <option 
+                    key={uuid()}
+                    value={value.toLowerCase()}>
+                    {value}
+                </option>
+                ))}
+            </select>
+            <label htmlFor={searchFormFieldNames.CATEGORY}>Ingredient</label>
+            <select className={styles.searchField}
+                id={searchFormFieldNames.INGREDIENT}
+                name={searchFormFieldNames.INGREDIENT}
+                value={ingredient}
+                onChange={event => { handleChange(setIngredient, event) }}>
+                {getOptions(ingredientGroupQuery.data).map(value => (
+                <option 
+                    key={uuid()}
+                    value={value.toLowerCase()}>
+                    {value}
+                </option>
+                ))}
+            </select>
+            <label htmlFor={searchFormFieldNames.CATEGORY}>Glass type</label> 
+            <select className={styles.searchField}
+                id={searchFormFieldNames.GLASS_TYPE}
+                name={searchFormFieldNames.GLASS_TYPE}
+                value={glassType}
+                onChange={event => { handleChange(setGlassType, event) }}>
+                {getOptions(glassGroupQuery.data).map(value => (
+                <option 
+                    key={uuid()}
+                    value={value.toLowerCase()}>
+                    {value}
+                </option>
+                ))}
+            </select>
+            <SelectButton disabled={!isSubmitableForm} type="submit">
+                Search
+            </SelectButton>
             {searchDrinkQuery.data != null &&
             searchDrinkQuery.data.length > 0 &&
             <SearchResult

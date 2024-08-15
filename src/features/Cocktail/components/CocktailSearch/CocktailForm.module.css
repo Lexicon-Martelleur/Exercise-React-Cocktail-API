@@ -23,7 +23,6 @@
     outline: none;
     padding: 1rem;
     font-size: 1.1rem;
-    overflow: hidden;
 }
 
 .search-field::placeholder {
