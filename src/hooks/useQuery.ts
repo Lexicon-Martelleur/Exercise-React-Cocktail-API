@@ -7,12 +7,14 @@ export const useQuery = <Data extends {}, Args extends (unknown[])>(
     query: (...args: Args) => Promise<Data>,
     args: Args = [] as unknown as Args
 ) => {
+    const [ idle, setIdle ] = useState(true);
     const [ pending, setPending ] = useState(true);
     const [ error, setError ] = useState(false);
     const [ errorMsg, setErrorMsg ] = useState("");
     const [ data, setData ] = useState<Data | null>(null);
     
     const queryData = useCallback(async () => {
+        setIdle(false)
         setPending(true);
         try {
             const data = await query(...args)
@@ -26,6 +28,7 @@ export const useQuery = <Data extends {}, Args extends (unknown[])>(
                 : setErrorMsg("Unknown error")
         }
         setPending(false);
+        setIdle(true)
     }, [query, args])
 
     return {
@@ -33,6 +36,7 @@ export const useQuery = <Data extends {}, Args extends (unknown[])>(
         error,
         errorMsg,
         pending,
+        idle,
         queryData
     };
 }

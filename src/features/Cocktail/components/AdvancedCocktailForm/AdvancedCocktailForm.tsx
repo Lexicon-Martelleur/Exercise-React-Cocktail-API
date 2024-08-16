@@ -9,19 +9,23 @@ import { useAdvancedCocktailForm } from "./useAdvancedCocktailForm";
 import styles from "./AdvancedCocktailForm.module.css";
 
 interface Props {
+    lastResult: IDrinkData[];
     onSelectDrink: (cocktail: IDrinkData) => void;
+    onSearchResult: (cocktails: IDrinkData[]) => void;
 }
 
-/**
- * @TODO
- * - Cache result
- * - Dynamic routing
- */
 export const AdvancedCocktailForm: React.FC<Props> = ({
-    onSelectDrink
+    lastResult,
+    onSelectDrink,
+    onSearchResult
 }): ReactElement => {
     const resultSection: React.MutableRefObject<HTMLDivElement | null> = useRef(null)
-    const hook = useAdvancedCocktailForm(onSelectDrink, resultSection)
+    const hook = useAdvancedCocktailForm(
+        lastResult,
+        resultSection,
+        onSelectDrink,
+        onSearchResult
+    )
 
     if (hook.isInitialLoading()) { return <Loader /> }
 
@@ -48,10 +52,11 @@ export const AdvancedCocktailForm: React.FC<Props> = ({
                 Search
             </SelectButton>
             <div className={styles.resultSection} ref={resultSection}></div>
-            {hook.getSearchResult().length != 0 &&
-                <SearchResult
-                    cocktails={hook.getSearchResult()}
-                    onSelectDrink={hook.handleSelectDrink}/>
+            {<SearchResult
+                pageIndex={hook.pageIndex}
+                cocktails={hook.getSearchResult() ?? lastResult}
+                onSelectDrink={hook.handleSelectDrink}
+                onBrowsePage={hook.updatePageIndex} />
             }
         </form>
     );

@@ -1,4 +1,4 @@
-import { ReactElement, useState } from "react";
+import { ReactElement, useEffect, useState } from "react";
 
 import { icons } from "../../../../assets";
 import { Icon } from "../../../../components";
@@ -9,27 +9,45 @@ import { SearchResult } from "../SearchResult";
 import styles from "./CocktailForm.module.css";
 
 interface Props {
+    lastResult: IDrinkData[];
     onSelectDrink: (cocktail: IDrinkData) => void;
+    onSearchResult: (cocktails: IDrinkData[]) => void;
 }
 
 export const CocktailForm: React.FC<Props> = ({
-    onSelectDrink
+    lastResult,
+    onSelectDrink,
+    onSearchResult
 }): ReactElement => {
+    const [pageIndex, setPageIndex] = useState(0);
     const [nameSearchString, setNameSearchString] = useState("");
     const searchDrinkQuery = useQuery(api.getCocktailByName, [nameSearchString]);
+
+    useEffect(() => {
+        if (searchDrinkQuery.data === null) {
+            return;
+        }
+        onSearchResult(searchDrinkQuery.data);
+    }, [searchDrinkQuery.data]);
 
     const handleSubmit:
     React.FormEventHandler<HTMLFormElement> = (event) => {
         event.preventDefault();
+        setPageIndex(0);
         searchDrinkQuery.queryData();
     }
 
     const handleSelectDrink = (drinkIndex: number) => {
-        if (searchDrinkQuery.data == null ||
-            drinkIndex >= searchDrinkQuery.data.length) {
-            return;
+        if (searchDrinkQuery.data != null &&
+            drinkIndex < searchDrinkQuery.data.length) {
+            onSelectDrink(searchDrinkQuery?.data[drinkIndex])
+        } else if (drinkIndex < lastResult.length) {
+            onSelectDrink(lastResult[drinkIndex])
         }
-        onSelectDrink(searchDrinkQuery.data[drinkIndex])
+    }
+
+    const updatePageIndex = (offset: number) => {
+        setPageIndex(prevValue => prevValue + offset);
     }
 
     return (
@@ -50,12 +68,11 @@ export const CocktailForm: React.FC<Props> = ({
                     <Icon icon={icons.search} size="medium"/>
                 </button>
             </div>
-            {searchDrinkQuery.data != null &&
-            searchDrinkQuery.data.length > 0 &&
             <SearchResult
-                cocktails={searchDrinkQuery.data}
-                onSelectDrink={handleSelectDrink}/>
-            }
+                pageIndex={pageIndex}
+                cocktails={searchDrinkQuery.data ?? lastResult}
+                onSelectDrink={handleSelectDrink}
+                onBrowsePage={updatePageIndex}/>
         </form>
     )
 }

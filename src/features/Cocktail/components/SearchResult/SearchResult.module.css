@@ -12,13 +12,17 @@
     padding: 1rem;
 }
 
-.search-result > button {
+.search-result-item {
     display: block;
     width: 100%;
     text-align: start;
-    padding-block: 1rem;
+    padding: 1rem 0.5rem;
     border: none;
     background-color: var(--BG_MEDIUM);
     border-bottom: var(--BORDER_DARK);
     cursor: pointer;
+}
+
+.search-result-item:hover {
+    background-color: var(--BG_LIGHT);
 }

@@ -9,8 +9,10 @@ import {
 } from "../../../../data";
 
 export const useAdvancedCocktailForm = (
+    lastResult: IDrinkData[],
+    resultSection: React.MutableRefObject<HTMLDivElement | null>,
     onSelectDrink: (cocktail: IDrinkData) => void,
-    resultSection: React.MutableRefObject<HTMLDivElement | null>
+    onSearchResult: (cocktails: IDrinkData[]) => void
 ) => {
     const emptyErrorMsg = "";
     const noneValue = "NO VALUE";
@@ -18,6 +20,7 @@ export const useAdvancedCocktailForm = (
     const [glassType, setGlassType] = useState(noneValue);
     const [ingredient, setIngredient] = useState(noneValue);
     const [errorMsg, setErrorMsg] = useState(emptyErrorMsg);
+    const [pageIndex, setPageIndex] = useState(0);
     
     const searchQueryArgs = ((): CocktailGroupTypeWithValue[] => {
         const searchQueryArgs: CocktailGroupTypeWithValue[] = [];
@@ -58,23 +61,22 @@ export const useAdvancedCocktailForm = (
         glassGroupQuery.error,
         searchDrinkQuery.error
     ]);
-
+    
     useEffect(() => {
-        if (searchDrinkQuery.data == null ||
-            searchDrinkQuery.data.length === 0) {
+        if (searchDrinkQuery.data === null) {
             return;
         }
         resultSection.current?.scrollIntoView({ 
             behavior: "smooth",
             block: "start"
         });
-    }, [
-        searchDrinkQuery.data
-    ]);
+        onSearchResult(searchDrinkQuery.data);
+    }, [searchDrinkQuery.data]);
 
     const handleSubmit:
     React.FormEventHandler<HTMLFormElement> = (event) => {
         event.preventDefault();
+        setPageIndex(0);
         searchDrinkQuery.queryData();
     }
 
@@ -110,15 +112,11 @@ export const useAdvancedCocktailForm = (
     }
 
     const getSearchResult = () => {
-        if (searchDrinkQuery.data == null ||
-            searchDrinkQuery.data.length === 0) {
-            return []
-        }
-        return searchDrinkQuery.data; 
+        return searchDrinkQuery.data;
     }
 
     const isResultLoading = () => (
-        getSearchResult().length != 0 && searchDrinkQuery.pending
+        searchDrinkQuery.pending && !searchDrinkQuery.idle
     );
 
     const isInitialLoading = () => (
@@ -135,17 +133,22 @@ export const useAdvancedCocktailForm = (
     );
 
     const handleSelectDrink = (drinkIndex: number) => {
-        if (searchDrinkQuery.data == null ||
-            drinkIndex >= searchDrinkQuery.data.length) {
-            return;
+        if (searchDrinkQuery.data != null &&
+            drinkIndex < searchDrinkQuery.data.length) {
+                api.getCocktailById(searchDrinkQuery.data[drinkIndex].id).then(cocktail => {
+                    onSelectDrink(cocktail);
+                }).catch(err => {
+                    err instanceof APIError
+                        ? setErrorMsg(err.message)
+                        : setErrorMsg("Unknown error")
+                })
+        } else if (drinkIndex < lastResult.length) {
+            onSelectDrink(lastResult[drinkIndex])
         }
-        api.getCocktailById(searchDrinkQuery.data[drinkIndex].id).then(cocktail => {
-            onSelectDrink(cocktail);
-        }).catch(err => {
-            err instanceof APIError
-                ? setErrorMsg(err.message)
-                : setErrorMsg("Unknown error")
-        })
+    }
+
+    const updatePageIndex = (offset: number) => {
+        setPageIndex(prevValue => prevValue + offset)
     }
 
     const isError = () => errorMsg !== emptyErrorMsg;
@@ -157,6 +160,7 @@ export const useAdvancedCocktailForm = (
         ingredient,
         glassType,
         errorMsg,
+        pageIndex,
         handleSubmit,
         getSearchResult,
         getCategories,
@@ -169,6 +173,7 @@ export const useAdvancedCocktailForm = (
         isInitialLoading,
         isResultLoading,
         handleSelectDrink,
+        updatePageIndex,
         isError,
         unsetError
     }

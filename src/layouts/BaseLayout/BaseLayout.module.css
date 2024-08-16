@@ -10,6 +10,8 @@ main {
     left: 0;
     background: var(--BG_DARK_X);
     height: var(--HEADER_HEIGHT);
+    border-bottom: var(--BORDER_LIGHT);
+    z-index: var(--Z_INDEX_LEVEL_MAX);
 }
 
 .header .nav {

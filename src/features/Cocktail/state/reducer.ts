@@ -1,9 +1,10 @@
 import { cocktailActions } from "./constants";
 import {
-    AddDrinkToCacheAction,
+    AddCocktailSearchToCacheAction,
+    AddAdvancedCocktailSearchToCacheAction,
     ICocktailAction,
     ICocktailState,
-    UpdateDrinkSearchTypeAction,
+    UpdateCocktailSearchTypeAction,
     UppdateCurrentCocktailAction
 } from "./types";
 
@@ -14,8 +15,10 @@ export function cocktailReducer (
     switch (action.type) {
         case cocktailActions.UPDATE_CURRENT_DRINK:
             return handleUpdateCurrentDrinkAction(action, state);
-        case cocktailActions.ADD_DRINK_TO_CACHE:
-            return handleAddDrinkToCacheAction(action, state);
+        case cocktailActions.ADD_COCKTAIL_SEARCH_TO_CACHE:
+            return handleAddCocktailSearchToCacheAction(action, state);
+        case cocktailActions.ADD_ADVANCED_COCKTAIL_SEARCH_TO_CACHE:
+            return handleAddAdvancedCocktailSearchToCacheAction(action, state);
         case cocktailActions.UPDATE_DRINK_SEARCH:
                 return handleUpdateDrinkSearchAction(action, state);
         default:
@@ -33,21 +36,28 @@ function handleUpdateCurrentDrinkAction (
     };
 }
 
-function handleAddDrinkToCacheAction (
-    action: AddDrinkToCacheAction,
+function handleAddCocktailSearchToCacheAction (
+    action: AddCocktailSearchToCacheAction,
     state: ICocktailState
 ) {
     return {
         ...state,
-        cachedDrinks: [
-            ...state.cachedDrinks,
-            action.payload
-        ]
+        cachedCocktailSearch: action.payload
+    };
+}
+
+function handleAddAdvancedCocktailSearchToCacheAction (
+    action: AddAdvancedCocktailSearchToCacheAction,
+    state: ICocktailState
+) {
+    return {
+        ...state,
+        cachedAdvancedCocktailSearch: action.payload
     };
 }
 
 function handleUpdateDrinkSearchAction (
-    action: UpdateDrinkSearchTypeAction,
+    action: UpdateCocktailSearchTypeAction,
     state: ICocktailState
 ) {
     return {

@@ -4,7 +4,8 @@ import { Outlet } from "react-router-dom";
 import { BaseLayout } from "../layouts";
 import { cocktailReducer, searchType } from "../features";
 import {
-	getCocktailCachedData,
+	getCocktailSearchResult,
+	getCocktailAdvancedSearchResult,
 	getCurrentCocktailData
 } from "../data"
 
@@ -15,7 +16,8 @@ export const App = (): ReactElement => {
 	] = useReducer(
 		cocktailReducer, {
 		currentDrink: getCurrentCocktailData(),
-		cachedDrinks: getCocktailCachedData(),
+		cachedCocktailSearch: getCocktailSearchResult(),
+		cachedAdvancedCocktailSearch: getCocktailAdvancedSearchResult(),
 		searchType: searchType.DEFAULT
 	});
 

@@ -7,8 +7,9 @@ export type SearchType = typeof searchType[
 
 export type ICocktailState = Readonly<{
     currentDrink: IDrinkData,
-    cachedDrinks: Readonly<IDrinkData>[],
-    searchType: SearchType
+    cachedCocktailSearch: Readonly<IDrinkData>[],
+    cachedAdvancedCocktailSearch: Readonly<IDrinkData>[],
+    searchType: Readonly<SearchType>
 }>;
 
 export interface UppdateCurrentCocktailAction {
@@ -16,18 +17,24 @@ export interface UppdateCurrentCocktailAction {
     payload: IDrinkData;
 }
 
-export interface AddDrinkToCacheAction {
-    type: typeof cocktailActions.ADD_DRINK_TO_CACHE;
-    payload: IDrinkData;
+export interface AddCocktailSearchToCacheAction {
+    type: typeof cocktailActions.ADD_COCKTAIL_SEARCH_TO_CACHE;
+    payload: IDrinkData[];
 }
 
-export interface UpdateDrinkSearchTypeAction {
+export interface AddAdvancedCocktailSearchToCacheAction {
+    type: typeof cocktailActions.ADD_ADVANCED_COCKTAIL_SEARCH_TO_CACHE;
+    payload: IDrinkData[];
+}
+
+export interface UpdateCocktailSearchTypeAction {
     type: typeof cocktailActions.UPDATE_DRINK_SEARCH;
     payload: SearchType;
 }
 
 export type ICocktailAction = (
     UppdateCurrentCocktailAction |
-    AddDrinkToCacheAction |
-    UpdateDrinkSearchTypeAction
+    AddCocktailSearchToCacheAction |
+    AddAdvancedCocktailSearchToCacheAction |
+    UpdateCocktailSearchTypeAction
 );

@@ -19,6 +19,10 @@ export function getCurrentCocktailData (): IDrinkData {
     }
 }
 
-export function getCocktailCachedData (): IDrinkData[] {
+export function getCocktailSearchResult (): IDrinkData[] {
+    return [];
+}
+
+export function getCocktailAdvancedSearchResult (): IDrinkData[] {
     return [];
 }

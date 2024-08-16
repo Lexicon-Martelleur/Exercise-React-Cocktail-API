@@ -5,7 +5,7 @@ import { SelectButton } from "../../../../components";
 import { IDrinkData } from "../../../../data";
 import { path } from "../../../../constants";
 import { useCocktailContext } from "../../context";
-import { searchType, updateDrinkSearchTypeAction, uppdateCurrentCocktailAction } from "../../state";
+import * as state from "../../state";
 import { CocktailForm } from "../CocktailForm";
 import { AdvancedCocktailForm } from "../AdvancedCocktailForm";
 
@@ -18,21 +18,29 @@ export const CocktailSearch = (): ReactElement => {
     const [dispatchCoctailAction, cocktailState] = useCocktailContext();
     
     const navigateToSelectedDrink = (cocktail: IDrinkData) =>  {
-        dispatchCoctailAction(uppdateCurrentCocktailAction(
+        dispatchCoctailAction(state.uppdateCurrentCocktailAction(
             cocktail
         ));
         navigate(`/${path.INFO}`);
     }
 
-    const toggleAdvancedSearch = () => {
-        const search = cocktailState.searchType === searchType.ADVANCED
-            ? searchType.DEFAULT
-            :searchType.ADVANCED
-        dispatchCoctailAction(updateDrinkSearchTypeAction(search));
+    const handleSearchResult = (cocktails: IDrinkData[]) => {
+        dispatchCoctailAction(state.addCocktailSearchToCacheAction(cocktails))
     }
 
-    const isAdvancedSearch = () => cocktailState.searchType === searchType.ADVANCED;
+    const handleAdvancedSearchResult = (cocktails: IDrinkData[]) => {
+        dispatchCoctailAction(state.addAdvancedCocktailSearchToCacheAction(cocktails))
+    }
     
+    const isAdvancedSearch = () => cocktailState.searchType === state.searchType.ADVANCED;
+    
+    const toggleAdvancedSearch = () => {
+        const search = isAdvancedSearch()
+            ? state.searchType.DEFAULT
+            : state.searchType.ADVANCED
+        dispatchCoctailAction(state.updateCocktailSearchTypeAction(search));
+    }
+
     return (
         <article className={styles.searchArticle}>
             {isAdvancedSearch()
@@ -44,7 +52,9 @@ export const CocktailSearch = (): ReactElement => {
                         Select {`'${searchTitle}'`}
                     </SelectButton>
                     <AdvancedCocktailForm
-                        onSelectDrink={navigateToSelectedDrink}/>
+                        lastResult={cocktailState.cachedAdvancedCocktailSearch}
+                        onSelectDrink={navigateToSelectedDrink}
+                        onSearchResult={handleAdvancedSearchResult} />
                 </>
             :
                 <>
@@ -54,9 +64,11 @@ export const CocktailSearch = (): ReactElement => {
                         Select {`'${advancedSearchTitle}'`}
                     </SelectButton>                
                     <CocktailForm
-                        onSelectDrink={navigateToSelectedDrink}/>
+                        lastResult={cocktailState.cachedCocktailSearch}
+                        onSelectDrink={navigateToSelectedDrink}
+                        onSearchResult={handleSearchResult} />
                 </>
             }
         </article>
-    )
+    );
 }
