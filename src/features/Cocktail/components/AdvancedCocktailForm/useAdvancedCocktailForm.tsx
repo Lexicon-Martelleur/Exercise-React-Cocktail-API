@@ -9,7 +9,8 @@ import {
 } from "../../../../data";
 
 export const useAdvancedCocktailForm = (
-    onSelectDrink: (cocktail: IDrinkData) => void
+    onSelectDrink: (cocktail: IDrinkData) => void,
+    resultSection: React.MutableRefObject<HTMLDivElement | null>
 ) => {
     const emptyErrorMsg = "";
     const noneValue = "NO VALUE";
@@ -100,6 +101,7 @@ export const useAdvancedCocktailForm = (
             searchDrinkQuery.data.length === 0) {
             return []
         }
+        resultSection.current?.scrollIntoView({ behavior: "smooth", block: "start" });
         return searchDrinkQuery.data; 
     }
 

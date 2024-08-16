@@ -1,4 +1,4 @@
-import { ReactElement } from "react";
+import React, { ReactElement, useRef } from "react";
 
 import { IDrinkData } from "../../../../data";
 import { ErrorModal, Loader, Select, SelectButton } from "../../../../components";
@@ -20,14 +20,15 @@ interface Props {
 export const AdvancedCocktailForm: React.FC<Props> = ({
     onSelectDrink
 }): ReactElement => {
-    const hook = useAdvancedCocktailForm(onSelectDrink)
+    const resultSection: React.MutableRefObject<HTMLDivElement | null> = useRef(null)
+    const hook = useAdvancedCocktailForm(onSelectDrink, resultSection)
 
     if (hook.isInitialLoading()) { return <Loader /> }
 
     return (
         <form className={styles.form} onSubmit={hook.handleSubmit}>
             {hook.isError() && <ErrorModal message={hook.errorMsg} onClose={hook.unsetError}/>}
-            <label htmlFor={searchFormFieldNames.CATEGORY}>Category</label>
+            <label htmlFor={searchFormFieldNames.CATEGORY}>Drink Category</label>
             <Select name={searchFormFieldNames.CATEGORY}
                 value={hook.category}
                 options={hook.getCategories()}
@@ -46,6 +47,7 @@ export const AdvancedCocktailForm: React.FC<Props> = ({
             <SelectButton disabled={!hook.isSubmitableForm()} type="submit">
                 Search
             </SelectButton>
+            <div className={styles.resultSection} ref={resultSection}></div>
             {hook.getSearchResult().length != 0 &&
                 <SearchResult
                     cocktails={hook.getSearchResult()}
