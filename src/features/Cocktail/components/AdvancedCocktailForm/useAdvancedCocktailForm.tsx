@@ -3,20 +3,20 @@ import React, { useEffect, useState } from "react";
 import { useQuery } from "../../../../hooks";
 import {
     cocktailAPI as api,
+    APIError,
     CocktailGroupTypeWithValue,
     IDrinkData
 } from "../../../../data";
 
-/**
- * @TODO Batch error state
- */
 export const useAdvancedCocktailForm = (
     onSelectDrink: (cocktail: IDrinkData) => void
 ) => {
+    const emptyErrorMsg = "";
     const noneValue = "NO VALUE";
     const [category, setCategory] = useState(noneValue);
     const [glassType, setGlassType] = useState(noneValue);
     const [ingredient, setIngredient] = useState(noneValue);
+    const [errorMsg, setErrorMsg] = useState(emptyErrorMsg);
     
     const searchQueryArgs = ((): CocktailGroupTypeWithValue[] => {
         const searchQueryArgs: CocktailGroupTypeWithValue[] = [];
@@ -38,10 +38,25 @@ export const useAdvancedCocktailForm = (
     const searchDrinkQuery = useQuery(api.getCocktailsByMultipleGroupsWithValue, [searchQueryArgs]);
 
     useEffect(() => {
-        categoryGroupQuery.data == null && categoryGroupQuery.queryData();
-        glassGroupQuery.data == null && glassGroupQuery.queryData();
-        ingredientGroupQuery.data == null && ingredientGroupQuery.queryData();
-    }, [categoryGroupQuery, glassGroupQuery, ingredientGroupQuery]);
+        categoryGroupQuery.queryData();
+        glassGroupQuery.queryData();
+        ingredientGroupQuery.queryData();
+    }, []);
+
+    useEffect(() => {
+        let msg
+        if (categoryGroupQuery.error) { msg = categoryGroupQuery.errorMsg; }
+        else if (ingredientGroupQuery.error) { msg = ingredientGroupQuery.errorMsg; }
+        else if (glassGroupQuery.error) { msg = glassGroupQuery.errorMsg }
+        else if (searchDrinkQuery.error) { msg = searchDrinkQuery.errorMsg; }
+        else { msg = emptyErrorMsg; }
+        setErrorMsg(msg)
+    }, [
+        categoryGroupQuery.error,
+        ingredientGroupQuery.error,
+        glassGroupQuery.error,
+        searchDrinkQuery.error
+    ])
 
     const handleSubmit:
     React.FormEventHandler<HTMLFormElement> = (event) => {
@@ -88,17 +103,7 @@ export const useAdvancedCocktailForm = (
         return searchDrinkQuery.data; 
     }
 
-    const handleSelectDrink = (drinkIndex: number) => {
-        if (searchDrinkQuery.data == null ||
-            drinkIndex >= searchDrinkQuery.data.length) {
-            return;
-        }
-        api.getCocktailById(searchDrinkQuery.data[drinkIndex].id).then(cocktail => {
-            onSelectDrink(cocktail);
-        })
-    }
-
-    const isReultLoading = () => (
+    const isResultLoading = () => (
         getSearchResult().length != 0 && searchDrinkQuery.pending
     );
 
@@ -115,21 +120,42 @@ export const useAdvancedCocktailForm = (
         !isInitialLoading()
     );
 
+    const handleSelectDrink = (drinkIndex: number) => {
+        if (searchDrinkQuery.data == null ||
+            drinkIndex >= searchDrinkQuery.data.length) {
+            return;
+        }
+        api.getCocktailById(searchDrinkQuery.data[drinkIndex].id).then(cocktail => {
+            onSelectDrink(cocktail);
+        }).catch(err => {
+            err instanceof APIError
+                ? setErrorMsg(err.message)
+                : setErrorMsg("Unknown error")
+        })
+    }
+
+    const isError = () => errorMsg !== emptyErrorMsg;
+
+    const unsetError = () => { setErrorMsg(emptyErrorMsg); }
+
     return {
         category,
         ingredient,
         glassType,
+        errorMsg,
+        handleSubmit,
         getSearchResult,
         getCategories,
         getIngredients,
         getGlassTypes,
-        handleSubmit,
         updateCategory,
         updateIngredient,
         updateGlassType,
-        handleSelectDrink,
         isSubmitableForm,
         isInitialLoading,
-        isReultLoading
+        isResultLoading,
+        handleSelectDrink,
+        isError,
+        unsetError
     }
 }

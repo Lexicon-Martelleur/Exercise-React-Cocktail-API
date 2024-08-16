@@ -6,6 +6,8 @@ import refreshDark from "./refresh-dark.svg";
 import refreshLight from "./refresh-light.svg";
 import ingredientsDark from "./ingredients-dark.svg";
 import ingredientsLight from "./ingredients-light.svg";
+import closeDark from "./close-dark.svg";
+import closeLight from "./close-light.svg";
 
 
 export const icons = {
@@ -55,6 +57,18 @@ export const icons = {
             src: ingredientsLight,
             alt: "Drink ingredients",
             title: "Drink ingredients"
+        }
+    },
+    close: {
+        dark: {
+            src: closeDark,
+            alt: "Close",
+            title: "Drink ingredients"
+        },
+        light: {
+            src: closeLight,
+            alt: "Close",
+            title: "Close"
         }
     }
 } as const;

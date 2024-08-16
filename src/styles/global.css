@@ -22,6 +22,11 @@
     --HEADER_HEIGHT: 60px;
 
     --SHADOW_LIGHT: rgba(0, 0, 0, 0.35) 0px 0px 15px;
+
+    --Z_INDEX_LEVEL_1: 100;
+    --Z_INDEX_LEVEL_2: 200;
+    --Z_INDEX_LEVEL_3: 300;
+    --Z_INDEX_LEVEL_MAX: 1000;
 }
 
 * {
@@ -47,7 +52,7 @@
         --BG_DARK_X: #03001C;
         --BG_DARK: #1b113b;
         --BG_MEDIUM: #301e67;
-        --BG_LIGHT: #5B8FB9;
+        --BG_LIGHT: #4a4083;
 
         --FONT_COLOR: var(--FONT_COLOR_LIGHT);
     }

@@ -101,7 +101,7 @@ export class CocktailAPI {
 
     getCocktailsByMultipleGroupsWithValue = async (
         groupsWithValue: CocktailGroupTypeWithValue[]
-    ) => {
+    ): Promise<IDrinkData[]> => {
         try {
             let cocktails: IDrinkData[] = [];
             for (const item of groupsWithValue) {

@@ -1,4 +1,5 @@
 import { useCallback, useState } from "react";
+import { APIError } from "../data";
 
 export type UseQueryReturnType = ReturnType<typeof useQuery>;
 
@@ -6,8 +7,9 @@ export const useQuery = <Data extends {}, Args extends (unknown[])>(
     query: (...args: Args) => Promise<Data>,
     args: Args = [] as unknown as Args
 ) => {
-    const [ pending, setPending ] = useState<boolean>(true);
-    const [ error, setError ] = useState<boolean>(false);
+    const [ pending, setPending ] = useState(true);
+    const [ error, setError ] = useState(false);
+    const [ errorMsg, setErrorMsg ] = useState("");
     const [ data, setData ] = useState<Data | null>(null);
     
     const queryData = useCallback(async () => {
@@ -19,6 +21,9 @@ export const useQuery = <Data extends {}, Args extends (unknown[])>(
         } catch (err) {
             setData(null);
             setError(true);
+            err instanceof APIError
+                ? setErrorMsg(err.message)
+                : setErrorMsg("Unknown error")
         }
         setPending(false);
     }, [query, args])
@@ -26,6 +31,7 @@ export const useQuery = <Data extends {}, Args extends (unknown[])>(
     return {
         data,
         error,
+        errorMsg,
         pending,
         queryData
     };

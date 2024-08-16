@@ -1,11 +1,11 @@
 import { ReactElement } from "react";
 
 import { IDrinkData } from "../../../../data";
-import { Loader, Select, SelectButton } from "../../../../components";
+import { ErrorModal, Loader, Select, SelectButton } from "../../../../components";
 import { SearchResult } from "../SearchResult";
 
 import { searchFormFieldNames } from "./constants";
-import { useAdvancedCocktailForm } from "./useAdvancedCocktailForm"
+import { useAdvancedCocktailForm } from "./useAdvancedCocktailForm";
 import styles from "./AdvancedCocktailForm.module.css";
 
 interface Props {
@@ -26,6 +26,7 @@ export const AdvancedCocktailForm: React.FC<Props> = ({
 
     return (
         <form className={styles.form} onSubmit={hook.handleSubmit}>
+            {hook.isError() && <ErrorModal message={hook.errorMsg} onClose={hook.unsetError}/>}
             <label htmlFor={searchFormFieldNames.CATEGORY}>Category</label>
             <Select name={searchFormFieldNames.CATEGORY}
                 value={hook.category}
@@ -41,7 +42,7 @@ export const AdvancedCocktailForm: React.FC<Props> = ({
                 value={hook.glassType}
                 options={hook.getGlassTypes()}
                 onChange={hook.updateGlassType} />
-            {hook.isReultLoading() && <Loader />}
+            {hook.isResultLoading() && <Loader />}
             <SelectButton disabled={!hook.isSubmitableForm()} type="submit">
                 Search
             </SelectButton>
