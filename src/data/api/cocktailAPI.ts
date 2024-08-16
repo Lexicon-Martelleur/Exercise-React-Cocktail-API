@@ -1,4 +1,9 @@
-import { CocktailGroupType, CocktailGroupTypeWithValue, IDrinkData, isRandomDrinkData } from "../types";
+import {
+    CocktailGroupType,
+    CocktailGroupTypeWithValue,
+    IDrinkData,
+    isRandomDrinkData
+} from "../types";
 import { APIError } from "./apiError";
 import { extractIngredienstWithMeasurements } from "../utility";
 

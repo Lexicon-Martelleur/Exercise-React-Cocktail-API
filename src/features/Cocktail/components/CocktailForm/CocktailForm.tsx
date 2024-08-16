@@ -4,7 +4,7 @@ import { icons } from "../../../../assets";
 import { Icon } from "../../../../components";
 import { cocktailAPI as api, IDrinkData } from "../../../../data";
 import { useQuery } from "../../../../hooks";
-import { SearchResult } from "./SearchResult";
+import { SearchResult } from "../SearchResult";
 
 import styles from "./CocktailForm.module.css";
 

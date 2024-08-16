@@ -6,15 +6,17 @@ import { IDrinkData } from "../../../../data";
 import { path } from "../../../../constants";
 import { useCocktailContext } from "../../context";
 import { uppdateCurrentCocktailAction } from "../../state";
-import { CocktailForm } from "./CocktailForm";
-import { AdvancedCocktailForm } from "./AdvancedCocktailForm";
+import { CocktailForm } from "../CocktailForm";
+import { AdvancedCocktailForm } from "../AdvancedCocktailForm";
 
 import styles from "./CocktailSearch.module.css";
 
 export const CocktailSearch = (): ReactElement => {
+    const searchTitle = "Search by name";
+    const advancedSearchTitle = "Advanced Search";
     const navigate = useNavigate();
     const [dispatchCoctailAction] = useCocktailContext();
-    const [advancedSearch, setAdvancedSearch] = useState(false);
+    const [isAdvancedSearch, setIsAdvancedSearch] = useState(false);
     
     const navigateToSelectedDrink = (cocktail: IDrinkData) =>  {
         dispatchCoctailAction(uppdateCurrentCocktailAction(
@@ -24,19 +26,33 @@ export const CocktailSearch = (): ReactElement => {
     }
 
     const toggleAdvancedSearch = () => {
-        setAdvancedSearch(prevValue => !prevValue);
+        setIsAdvancedSearch(prevValue => !prevValue);
     }
     
     return (
-        <section className={styles.searchSection}>
-            <h3>{advancedSearch ? "Search by filter" : "Search by name"}</h3>
-            <SelectButton onSelect={toggleAdvancedSearch}>
-                Select {advancedSearch ? "'Search by name'" : "'Search by filter'"}
-            </SelectButton>
-            {advancedSearch
-                ? <AdvancedCocktailForm onSelectDrink={navigateToSelectedDrink}/>
-                : <CocktailForm onSelectDrink={navigateToSelectedDrink}/>
+        <article className={styles.searchArticle}>
+            {isAdvancedSearch
+            ?
+                <>
+                    <h3>{advancedSearchTitle}</h3>
+                    <SelectButton
+                        onSelect={toggleAdvancedSearch}>
+                        Select {`'${searchTitle}'`}
+                    </SelectButton>
+                    <AdvancedCocktailForm
+                        onSelectDrink={navigateToSelectedDrink}/>
+                </>
+            :
+                <>
+                    <h3>{searchTitle}</h3>
+                    <SelectButton
+                        onSelect={toggleAdvancedSearch}>
+                        Select {`'${advancedSearchTitle}'`}
+                    </SelectButton>                
+                    <CocktailForm
+                        onSelectDrink={navigateToSelectedDrink}/>
+                </>
             }
-        </section>
+        </article>
     )
 }

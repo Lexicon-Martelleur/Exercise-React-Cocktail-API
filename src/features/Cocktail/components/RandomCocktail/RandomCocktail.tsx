@@ -5,7 +5,7 @@ import { cocktailAPI } from "../../../../data";
 import { CocktailCard } from "../CocktailCard";
 import { useQuery } from "../../../../hooks";
 import { icons } from "../../../../assets";
-import { Icon, SelectButton } from "../../../../components";
+import { Icon, Loader, SelectButton } from "../../../../components";
 import { useCocktailContext } from "../../context";
 import { uppdateCurrentCocktailAction } from "../../state";
 import { path } from "../../../../constants";
@@ -31,13 +31,7 @@ export const RandomCocktail = (): ReactElement => {
         navigate(`/${path.INFO}?id=${randomDrinkQuery.data.id}`);
     }
 
-    if (randomDrinkQuery.pending) {
-        return (
-            <div className={styles.loaderCtr}>
-                <div className={styles.loader}></div>
-            </div>
-        )
-    }
+    if (randomDrinkQuery.pending) { return <Loader /> }
     
     return (
         <article className={styles.randomCocktailArticle}>

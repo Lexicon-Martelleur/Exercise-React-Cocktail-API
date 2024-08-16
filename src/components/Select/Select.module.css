@@ -1,0 +1,8 @@
+.select {
+    background-color: var(--BG_LIGHT);
+    border: none;
+    outline: none;
+    padding: 1rem;
+    margin-bottom: 2rem;
+    font-size: 1.1rem;
+}
