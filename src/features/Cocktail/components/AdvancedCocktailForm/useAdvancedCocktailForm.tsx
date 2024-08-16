@@ -57,7 +57,20 @@ export const useAdvancedCocktailForm = (
         ingredientGroupQuery.error,
         glassGroupQuery.error,
         searchDrinkQuery.error
-    ])
+    ]);
+
+    useEffect(() => {
+        if (searchDrinkQuery.data == null ||
+            searchDrinkQuery.data.length === 0) {
+            return;
+        }
+        resultSection.current?.scrollIntoView({ 
+            behavior: "smooth",
+            block: "start"
+        });
+    }, [
+        searchDrinkQuery.data
+    ]);
 
     const handleSubmit:
     React.FormEventHandler<HTMLFormElement> = (event) => {
@@ -101,7 +114,6 @@ export const useAdvancedCocktailForm = (
             searchDrinkQuery.data.length === 0) {
             return []
         }
-        resultSection.current?.scrollIntoView({ behavior: "smooth", block: "start" });
         return searchDrinkQuery.data; 
     }
 

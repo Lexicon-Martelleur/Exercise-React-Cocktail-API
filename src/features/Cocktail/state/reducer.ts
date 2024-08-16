@@ -3,6 +3,7 @@ import {
     AddDrinkToCacheAction,
     ICocktailAction,
     ICocktailState,
+    UpdateDrinkSearchTypeAction,
     UppdateCurrentCocktailAction
 } from "./types";
 
@@ -15,6 +16,8 @@ export function cocktailReducer (
             return handleUpdateCurrentDrinkAction(action, state);
         case cocktailActions.ADD_DRINK_TO_CACHE:
             return handleAddDrinkToCacheAction(action, state);
+        case cocktailActions.UPDATE_DRINK_SEARCH:
+                return handleUpdateDrinkSearchAction(action, state);
         default:
             return state;
     }
@@ -40,5 +43,15 @@ function handleAddDrinkToCacheAction (
             ...state.cachedDrinks,
             action.payload
         ]
+    };
+}
+
+function handleUpdateDrinkSearchAction (
+    action: UpdateDrinkSearchTypeAction,
+    state: ICocktailState
+) {
+    return {
+        ...state,
+        searchType: action.payload
     };
 }

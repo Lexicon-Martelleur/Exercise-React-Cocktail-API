@@ -1,11 +1,11 @@
-import { ReactElement, useState } from "react";
+import { ReactElement } from "react";
 import { useNavigate } from "react-router-dom";
 
 import { SelectButton } from "../../../../components";
 import { IDrinkData } from "../../../../data";
 import { path } from "../../../../constants";
 import { useCocktailContext } from "../../context";
-import { uppdateCurrentCocktailAction } from "../../state";
+import { searchType, updateDrinkSearchTypeAction, uppdateCurrentCocktailAction } from "../../state";
 import { CocktailForm } from "../CocktailForm";
 import { AdvancedCocktailForm } from "../AdvancedCocktailForm";
 
@@ -15,8 +15,7 @@ export const CocktailSearch = (): ReactElement => {
     const searchTitle = "Search by name";
     const advancedSearchTitle = "Advanced Search";
     const navigate = useNavigate();
-    const [dispatchCoctailAction] = useCocktailContext();
-    const [isAdvancedSearch, setIsAdvancedSearch] = useState(false);
+    const [dispatchCoctailAction, cocktailState] = useCocktailContext();
     
     const navigateToSelectedDrink = (cocktail: IDrinkData) =>  {
         dispatchCoctailAction(uppdateCurrentCocktailAction(
@@ -26,12 +25,17 @@ export const CocktailSearch = (): ReactElement => {
     }
 
     const toggleAdvancedSearch = () => {
-        setIsAdvancedSearch(prevValue => !prevValue);
+        const search = cocktailState.searchType === searchType.ADVANCED
+            ? searchType.DEFAULT
+            :searchType.ADVANCED
+        dispatchCoctailAction(updateDrinkSearchTypeAction(search));
     }
+
+    const isAdvancedSearch = () => cocktailState.searchType === searchType.ADVANCED;
     
     return (
         <article className={styles.searchArticle}>
-            {isAdvancedSearch
+            {isAdvancedSearch()
             ?
                 <>
                     <h3>{advancedSearchTitle}</h3>
