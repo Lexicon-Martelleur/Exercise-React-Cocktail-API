@@ -41,6 +41,14 @@ export const CocktailSearch = (): ReactElement => {
         dispatchCoctailAction(state.updateCocktailSearchTypeAction(search));
     }
 
+    const handleCoctailQueryChange = (value: string) => {
+        dispatchCoctailAction(state.addCocktailSearchQueryToCacheAction(value));
+    }
+
+    const handleAdvancedCoctailQueryChange = (value: state.AdvancedSearchFormQueryType) => {
+        dispatchCoctailAction(state.addAdvancedCocktailSearchQueryToCacheAction(value));
+    }
+
     return (
         <article className={styles.searchArticle}>
             {isAdvancedSearch()
@@ -52,9 +60,11 @@ export const CocktailSearch = (): ReactElement => {
                         Select {`'${searchTitle}'`}
                     </SelectButton>
                     <AdvancedCocktailForm
+                        query={cocktailState.cachedAdvancedCocktailSearchQuery}
                         lastResult={cocktailState.cachedAdvancedCocktailSearch}
                         onSelectDrink={navigateToSelectedDrink}
-                        onSearchResult={handleAdvancedSearchResult} />
+                        onSearchResult={handleAdvancedSearchResult}
+                        onQueryChange={handleAdvancedCoctailQueryChange} />
                 </>
             :
                 <>
@@ -64,9 +74,11 @@ export const CocktailSearch = (): ReactElement => {
                         Select {`'${advancedSearchTitle}'`}
                     </SelectButton>                
                     <CocktailForm
+                        query={cocktailState.cachedCocktailSearchQuery}
                         lastResult={cocktailState.cachedCocktailSearch}
                         onSelectDrink={navigateToSelectedDrink}
-                        onSearchResult={handleSearchResult} />
+                        onSearchResult={handleSearchResult}
+                        onQueryChange={handleCoctailQueryChange} />
                 </>
             }
         </article>

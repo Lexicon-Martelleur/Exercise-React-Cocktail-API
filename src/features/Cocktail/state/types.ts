@@ -5,10 +5,18 @@ export type SearchType = typeof searchType[
     keyof typeof searchType
 ];
 
+export interface AdvancedSearchFormQueryType {
+    category: string;
+    ingredient: string;
+    glassType: string;
+};
+
 export type ICocktailState = Readonly<{
     currentDrink: IDrinkData,
     cachedCocktailSearch: Readonly<IDrinkData>[],
+    cachedCocktailSearchQuery: string,
     cachedAdvancedCocktailSearch: Readonly<IDrinkData>[],
+    cachedAdvancedCocktailSearchQuery: AdvancedSearchFormQueryType,
     searchType: Readonly<SearchType>
 }>;
 
@@ -22,9 +30,19 @@ export interface AddCocktailSearchToCacheAction {
     payload: IDrinkData[];
 }
 
+export interface AddCocktailSearchQueryToCacheAction {
+    type: typeof cocktailActions.ADD_COCKTAIL_SEARCH_QUERY_TO_CACHE;
+    payload: string;
+}
+
 export interface AddAdvancedCocktailSearchToCacheAction {
     type: typeof cocktailActions.ADD_ADVANCED_COCKTAIL_SEARCH_TO_CACHE;
     payload: IDrinkData[];
+}
+
+export interface AddAdvancedCocktailSearchQueryToCacheAction {
+    type: typeof cocktailActions.ADD_ADVANCED_COCKTAIL_SEARCH_QUERY_TO_CACHE;
+    payload: AdvancedSearchFormQueryType;
 }
 
 export interface UpdateCocktailSearchTypeAction {
@@ -35,6 +53,8 @@ export interface UpdateCocktailSearchTypeAction {
 export type ICocktailAction = (
     UppdateCurrentCocktailAction |
     AddCocktailSearchToCacheAction |
+    AddCocktailSearchQueryToCacheAction |
     AddAdvancedCocktailSearchToCacheAction |
+    AddAdvancedCocktailSearchQueryToCacheAction |
     UpdateCocktailSearchTypeAction
 );

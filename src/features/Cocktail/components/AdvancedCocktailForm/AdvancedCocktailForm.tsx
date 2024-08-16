@@ -3,28 +3,35 @@ import React, { ReactElement, useRef } from "react";
 import { IDrinkData } from "../../../../data";
 import { ErrorModal, Loader, Select, SelectButton } from "../../../../components";
 import { SearchResult } from "../SearchResult";
+import { AdvancedSearchFormQueryType } from "../../state";
 
 import { searchFormFieldNames } from "./constants";
 import { useAdvancedCocktailForm } from "./useAdvancedCocktailForm";
 import styles from "./AdvancedCocktailForm.module.css";
 
 interface Props {
+    query: AdvancedSearchFormQueryType;
     lastResult: IDrinkData[];
     onSelectDrink: (cocktail: IDrinkData) => void;
     onSearchResult: (cocktails: IDrinkData[]) => void;
+    onQueryChange: (value: AdvancedSearchFormQueryType) => void;
 }
 
 export const AdvancedCocktailForm: React.FC<Props> = ({
+    query,
     lastResult,
     onSelectDrink,
-    onSearchResult
+    onSearchResult,
+    onQueryChange
 }): ReactElement => {
     const resultSection: React.MutableRefObject<HTMLDivElement | null> = useRef(null)
     const hook = useAdvancedCocktailForm(
+        query,
         lastResult,
         resultSection,
         onSelectDrink,
-        onSearchResult
+        onSearchResult,
+        onQueryChange
     )
 
     if (hook.isInitialLoading()) { return <Loader /> }

@@ -3,11 +3,7 @@ import { Outlet } from "react-router-dom";
 
 import { BaseLayout } from "../layouts";
 import { cocktailReducer, searchType } from "../features";
-import {
-	getCocktailSearchResult,
-	getCocktailAdvancedSearchResult,
-	getCurrentCocktailData
-} from "../data"
+import * as data from "../data";
 
 export const App = (): ReactElement => {
 	const [
@@ -15,9 +11,11 @@ export const App = (): ReactElement => {
 		dispatchCocktailAction
 	] = useReducer(
 		cocktailReducer, {
-		currentDrink: getCurrentCocktailData(),
-		cachedCocktailSearch: getCocktailSearchResult(),
-		cachedAdvancedCocktailSearch: getCocktailAdvancedSearchResult(),
+		currentDrink: data.getCurrentCocktailData(),
+		cachedCocktailSearch: data.getCocktailSearchResult(),
+		cachedCocktailSearchQuery: data.getCocktailSearchQuery(),
+		cachedAdvancedCocktailSearch: data.getCocktailAdvancedSearchResult(),
+		cachedAdvancedCocktailSearchQuery: data.getAdvancedCocktailSearchQuery(),
 		searchType: searchType.DEFAULT
 	});
 

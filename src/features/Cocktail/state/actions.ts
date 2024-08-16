@@ -1,8 +1,11 @@
 import { IDrinkData } from "../../../data/types";
 import { cocktailActions } from "./constants";
 import {
+    AddAdvancedCocktailSearchQueryToCacheAction,
     AddAdvancedCocktailSearchToCacheAction,
+    AddCocktailSearchQueryToCacheAction,
     AddCocktailSearchToCacheAction,
+    AdvancedSearchFormQueryType,
     SearchType,
     UpdateCocktailSearchTypeAction,
     UppdateCurrentCocktailAction
@@ -24,10 +27,26 @@ AddCocktailSearchToCacheAction {
     };
 }
 
+export function addCocktailSearchQueryToCacheAction (payload: string):
+AddCocktailSearchQueryToCacheAction {
+    return {
+        type: cocktailActions.ADD_COCKTAIL_SEARCH_QUERY_TO_CACHE,
+        payload
+    };
+}
+
 export function addAdvancedCocktailSearchToCacheAction (payload: IDrinkData[]):
 AddAdvancedCocktailSearchToCacheAction {
     return {
         type: cocktailActions.ADD_ADVANCED_COCKTAIL_SEARCH_TO_CACHE,
+        payload
+    };
+}
+
+export function addAdvancedCocktailSearchQueryToCacheAction (payload: AdvancedSearchFormQueryType):
+AddAdvancedCocktailSearchQueryToCacheAction {
+    return {
+        type: cocktailActions.ADD_ADVANCED_COCKTAIL_SEARCH_QUERY_TO_CACHE,
         payload
     };
 }

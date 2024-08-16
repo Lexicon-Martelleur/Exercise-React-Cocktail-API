@@ -1,3 +1,4 @@
+import { AdvancedSearchFormQueryType } from "../../features";
 import { IDrinkData } from "../types";
 
 export const NULL_DRINK_ID = "NULL_DRINK";
@@ -25,4 +26,16 @@ export function getCocktailSearchResult (): IDrinkData[] {
 
 export function getCocktailAdvancedSearchResult (): IDrinkData[] {
     return [];
+}
+
+export function getCocktailSearchQuery (): string {
+    return "";
+}
+
+export function getAdvancedCocktailSearchQuery (): AdvancedSearchFormQueryType {
+    return {
+        category: "",
+        ingredient: "",
+        glassType: ""
+    };
 }

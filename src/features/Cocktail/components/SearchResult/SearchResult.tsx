@@ -9,8 +9,8 @@ import styles from "./SearchResult.module.css";
 interface Props {
     pageIndex: number;
     cocktails: IDrinkData[];
-    onSelectDrink: (drinkIndex: number) => void
-    onBrowsePage: (offset: number) => void
+    onSelectDrink: (drinkIndex: number) => void;
+    onBrowsePage: (offset: number) => void;
 }
 
 export const SearchResult: React.FC<Props> = ({

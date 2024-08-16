@@ -9,15 +9,19 @@ import { SearchResult } from "../SearchResult";
 import styles from "./CocktailForm.module.css";
 
 interface Props {
+    query: string;
     lastResult: IDrinkData[];
     onSelectDrink: (cocktail: IDrinkData) => void;
     onSearchResult: (cocktails: IDrinkData[]) => void;
+    onQueryChange: (value: string) => void;
 }
 
 export const CocktailForm: React.FC<Props> = ({
+    query,
     lastResult,
     onSelectDrink,
-    onSearchResult
+    onSearchResult,
+    onQueryChange
 }): ReactElement => {
     const [pageIndex, setPageIndex] = useState(0);
     const [nameSearchString, setNameSearchString] = useState("");
@@ -50,6 +54,14 @@ export const CocktailForm: React.FC<Props> = ({
         setPageIndex(prevValue => prevValue + offset);
     }
 
+    const handleChange = (
+        value: string,
+        updateValue: (value: string) => void
+    ) => {
+        updateValue(value);
+        onQueryChange(value);
+    }
+
     return (
         <form className={styles.form} onSubmit={handleSubmit}>
             <div className={styles.searchCtr}>
@@ -61,7 +73,8 @@ export const CocktailForm: React.FC<Props> = ({
                     placeholder="E.g., margarita..."
                     minLength={2}
                     type="text"
-                    onChange={event => { setNameSearchString(event.target.value) }}/>
+                    value={query}
+                    onChange={e => { handleChange(e.target.value, setNameSearchString) }}/>
                 <button
                     className={styles.submitBtn} 
                     type="submit">
